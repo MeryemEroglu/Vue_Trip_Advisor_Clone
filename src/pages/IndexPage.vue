@@ -1,6 +1,5 @@
 <template>
-  <div class="container">
-    <p>deneme</p>
+  <div>
     <NavBar></NavBar>
   </div>
 </template>
