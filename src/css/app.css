@@ -9,6 +9,17 @@
   margin-left: auto;
 }
 
+html {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  min-height: unset;
+}
+
 @media (min-width: 718px) {
   .container,
   .container-sm {
