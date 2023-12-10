@@ -1,4 +1,6 @@
-<script setup></script>
+<script setup>
+import { ref } from 'vue';
+</script>
 
 <template>
   <div class="container">
@@ -13,7 +15,10 @@
         <a href="#">Devamı</a>
       </div>
       <div class="language-login-btn-container">
-        <div class="language-selector-button-container">
+        <div
+          @click="$emit('openLocalizationModal')"
+          class="language-selector-button-container"
+        >
           <i class="ri-global-line"></i>
           <div>
             <span>TRY</span>
@@ -25,7 +30,7 @@
   </div>
 </template>
 
-<style>
+<style scoped>
 .container {
   margin-top: 8px;
 }
@@ -72,6 +77,7 @@
   font-size: 16px;
   font-weight: 700;
   font-family: 'PT Sans', sans-serif;
+  white-space: nowrap;
 }
 .logo-search-container img {
   width: 188px;
@@ -113,5 +119,8 @@
 }
 .language-selector-button-container:hover {
   background-color: #f2f2f2;
+}
+
+@media (min-width: 1024px) {
 }
 </style>
