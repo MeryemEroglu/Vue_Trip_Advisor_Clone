@@ -19,8 +19,8 @@
     ></LocalizationOptions>
     <br />
     <br />
-    <!-- <LoginModal></LoginModal>-->
-    <ReviewContainer></ReviewContainer>
+    <!-- <ReviewContainer></ReviewContainer> -->
+    <LoginModal></LoginModal>
   </div>
 </template>
 
