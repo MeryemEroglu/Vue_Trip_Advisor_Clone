@@ -24,7 +24,9 @@ import { ref } from 'vue';
             <span>TRY</span>
           </div>
         </div>
-        <button class="login-btn">giriş yap</button>
+        <button @click="$emit('openLoginModal')" class="login-btn">
+          giriş yap
+        </button>
       </div>
     </nav>
   </div>

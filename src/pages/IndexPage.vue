@@ -6,6 +6,11 @@
           isLocalizationModalActive = true;
         }
       "
+      @openLoginModal="
+        () => {
+          isLoginModalActive = true;
+        }
+      "
     ></NavBar>
     <br />
     <br />
@@ -20,7 +25,10 @@
     <br />
     <br />
     <!-- <ReviewContainer></ReviewContainer> -->
-    <LoginModal></LoginModal>
+    <LoginModal
+      v-if="isLoginModalActive == true"
+      @closeLoginModal="() => (isLoginModalActive = false)"
+    ></LoginModal>
   </div>
 </template>
 
@@ -31,4 +39,5 @@ import LoginModal from 'src/components/LoginModal.vue';
 import ReviewContainer from 'src/components/Reviews/ReviewContainer.vue';
 import { ref } from 'vue';
 const isLocalizationModalActive = ref<boolean>(false);
+const isLoginModalActive = ref<boolean>(true);
 </script>
