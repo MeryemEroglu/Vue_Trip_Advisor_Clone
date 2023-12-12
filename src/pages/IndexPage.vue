@@ -29,7 +29,8 @@
   bottom: 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end;
+  padding-bottom: 10px;
 }
 
 .router-view-wrapper {
