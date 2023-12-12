@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" style="margin-top: 60px">
     <FrequentlyAskedQuestions></FrequentlyAskedQuestions>
   </div>
 </template>
