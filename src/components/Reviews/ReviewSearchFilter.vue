@@ -3,6 +3,7 @@ import { ref } from 'vue';
 const selectSort = ref('En Yeni');
 const sortOptions = ref(['En Yeni', 'En Eski']);
 const isSearchInputFocused = ref(false);
+const inputSearch = ref('');
 </script>
 
 <template>
@@ -10,6 +11,7 @@ const isSearchInputFocused = ref(false);
     <div :class="{ focused: isSearchInputFocused }" class="review-searchInput">
       <i class="ri-search-line"></i>
       <input
+        v-model="inputSearch"
         @focusin="
           () => {
             isSearchInputFocused = true;
@@ -18,6 +20,11 @@ const isSearchInputFocused = ref(false);
         @focusout="
           () => {
             isSearchInputFocused = false;
+          }
+        "
+        @input="
+          () => {
+            $emit('search', inputSearch);
           }
         "
         placeholder="Yorumlarda ara..."
@@ -32,6 +39,11 @@ const isSearchInputFocused = ref(false);
         v-model="selectSort"
         :options="sortOptions"
         :dense="true"
+        @update:model-value="
+          (value) => {
+            $emit('sort', value);
+          }
+        "
       ></q-select>
     </div>
   </div>
@@ -68,8 +80,6 @@ const isSearchInputFocused = ref(false);
 .reviewSearchFilter-container {
   display: flex;
   flex-direction: column;
-  margin-bottom: 16px;
   gap: 16px;
-  padding-bottom: 20px;
 }
 </style>
