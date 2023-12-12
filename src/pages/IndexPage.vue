@@ -39,5 +39,5 @@ import LoginModal from 'src/components/LoginModal.vue';
 import ReviewContainer from 'src/components/Reviews/ReviewContainer.vue';
 import { ref } from 'vue';
 const isLocalizationModalActive = ref<boolean>(false);
-const isLoginModalActive = ref<boolean>(true);
+const isLoginModalActive = ref<boolean>(false);
 </script>
