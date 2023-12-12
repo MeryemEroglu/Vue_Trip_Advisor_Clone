@@ -1,47 +1,60 @@
 <template>
   <div>
-    <NavBar
-      @openLocalizationModal="
-        () => {
-          isLocalizationModalActive = true;
-        }
-      "
-      @openLoginModal="
-        () => {
-          isLoginModalActive = true;
-        }
-      "
-    ></NavBar>
-    <br />
-    <br />
-    <LocalizationOptions
-      @closeLocalizationModal="
-        () => {
-          isLocalizationModalActive = false;
-        }
-      "
-      v-if="isLocalizationModalActive == true"
-    ></LocalizationOptions>
-    <br />
-    <br />
-    <!-- <ReviewContainer></ReviewContainer> -->
-    <LoginModal
-      v-if="isLoginModalActive == true"
-      @closeLoginModal="() => (isLoginModalActive = false)"
-    ></LoginModal>
-    <div class="container">
-      <FrequentlyAskedQuestions></FrequentlyAskedQuestions>
+    <div class="componentCatolog-container">
+      <div class="componentCatalog-list">
+        <router-link to="/NavBar">
+          <span>NavBar</span>
+        </router-link>
+        <router-link to="/FAQ">
+          <span>FrequentlyAskedQuestions</span>
+        </router-link>
+        <router-link to="/Review">
+          <span>Review</span>
+        </router-link>
+      </div>
+    </div>
+    <div class="router-view-wrapper">
+      <router-view />
     </div>
   </div>
 </template>
 
-<script setup lang="ts">
-import NavBar from 'src/components/NavBar.vue';
-import LocalizationOptions from 'src/components/LocalizationOptions.vue';
-import LoginModal from 'src/components/LoginModal.vue';
-import ReviewContainer from 'src/components/Reviews/ReviewContainer.vue';
-import FrequentlyAskedQuestions from 'src/components/FrequentlyAskedQuestions.vue';
-import { ref } from 'vue';
-const isLocalizationModalActive = ref<boolean>(false);
-const isLoginModalActive = ref<boolean>(false);
-</script>
+<script setup lang="ts"></script>
+
+<style>
+.componentCatolog-container {
+  position: fixed;
+  left: 10px;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.router-view-wrapper {
+}
+
+.componentCatalog-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.componentCatalog-list a {
+  padding: 5px 10px;
+  text-align: center;
+  color: #000000;
+  box-shadow: 0px 0px 0px 1px rgba(18, 55, 105, 0.08),
+    0px 1px 2px 0px rgba(164, 172, 185, 0.24);
+  text-decoration: none;
+  border-radius: 10px;
+  transition: 300ms;
+}
+
+.componentCatalog-list a.router-link-active {
+  color: #fff;
+  background-color: #00b7fd;
+  box-shadow: none;
+}
+</style>
