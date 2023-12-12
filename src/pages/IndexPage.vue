@@ -19,7 +19,8 @@
     ></LocalizationOptions>
     <br />
     <br />
-    <LoginModal></LoginModal>
+    <!-- <LoginModal></LoginModal>-->
+    <ReviewContainer></ReviewContainer>
   </div>
 </template>
 
@@ -27,6 +28,7 @@
 import NavBar from 'src/components/NavBar.vue';
 import LocalizationOptions from 'src/components/LocalizationOptions.vue';
 import LoginModal from 'src/components/LoginModal.vue';
+import ReviewContainer from 'src/components/Reviews/ReviewContainer.vue';
 import { ref } from 'vue';
 const isLocalizationModalActive = ref<boolean>(false);
 </script>
