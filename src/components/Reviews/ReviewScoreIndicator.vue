@@ -35,8 +35,8 @@ let filledCircleCount = Math.floor(props.score);
 }
 
 .reviewScoreIndicator-circle {
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
   background-color: #f2f2f2;
 }
