@@ -10,6 +10,19 @@ interface ReviewScore {
   label?: string;
 }
 
+interface review {
+  score: number;
+  likeCount: number;
+  isUserLiked: boolean;
+  createdAt: string;
+  title: string;
+  mainText: string;
+  userName: string;
+  userLocation: string;
+  userContributionCount: number;
+  imageUrl?: string;
+}
+
 const reviewScores = ref<ReviewScore[]>([
   {
     score: 5,
@@ -52,6 +65,81 @@ const score =
       totalReviews) *
       10
   ) / 10;
+
+const reviews = ref<review[]>([
+  {
+    score: 4,
+    likeCount: 451,
+    isUserLiked: false,
+    createdAt: '16/10/2021',
+    title: 'Çok güzel bir yer',
+    mainText:
+      "Şubat 2019'da Mexico-Cuba turuna gittik. Genel kültürüme ve tarih bilgime güvenirim. Dünyada çoğu ülkeyi dolaştım. Ama böyle bir kültür-tarih hazinesi beni şaşırttı doğrusu. İnanılmaz buldum. Taş devrinden beri bölgede olan herşey belirli bir düzen içinde görsel-yazısal anlatılmış. Ayrıca, Asya'lı atalarının varlığına ve nasıl geldiklerine ait açık kanıtları net bir şekilde sergilemişler. Kültür hazinesi mevcut. Bana göre, dünyada en çok görülesi müze ve şehirdi. Çok memnun kaldım. Tavsiye ederim.",
+    userName: 'SenaKH',
+
+    userLocation: 'İstanbul, Türkiye',
+    userContributionCount: 12,
+    imageUrl: 'src/assets/profilePicture1.jpg',
+  },
+  {
+    score: 3,
+    likeCount: 256,
+    isUserLiked: true,
+    createdAt: '8/12/2022',
+    title: 'Ortalama bir gezi',
+    mainText:
+      'Meksika ya gelince muhakkak uzun süre ayırıp gezilmeli. Bir çok medeniyeti kapsayan bu müzeye hayran kaldım. Bir çok eseri sağlam şekilde görebiliyorsunuz. Ardından da bu eserlerin ait olduğu mekanlarıda ziyaret edin',
+    userName: 'drerata',
+
+    userLocation: 'Eskişehir, Türkiye',
+    userContributionCount: 12,
+    imageUrl: 'src/assets/profilePicture2.jpg',
+  },
+  {
+    score: 5,
+    likeCount: 12,
+    isUserLiked: false,
+    createdAt: '25/11/2021',
+    title: 'Mütiş',
+    mainText:
+      'Ortam gerçekten çok başarılı. Dünya üzerinde gelebileceğiniz en iyi müzelerden biri. İçerisi ayrı zengin, bulunduğu bölge ayrı keyifli. İnsanlık tarihi çok güzel ve başarılı bir şekilde anlatılmış. Eğer çok iyi incelemek istiyorsanız en az yarım gün ayırın çıkarken hediyelik eşya dükkanına da uğramayı unutmayın.',
+    userName: 'Zeki O',
+
+    userLocation: 'Bolu, Türkiye',
+    userContributionCount: 12,
+    imageUrl: 'src/assets/profilePicture3.jpg',
+  },
+]);
+
+const showedReviews = ref<review[]>(reviews.value);
+
+const reviewsSortBy = ref('En Yeni');
+
+const handleSearch = (searchText: string) => {
+  if (searchText === '') {
+    showedReviews.value = reviews.value;
+  } else {
+    showedReviews.value = reviews.value.filter(
+      (review) =>
+        review.mainText.toLowerCase().includes(searchText.toLowerCase()) ||
+        review.title.toLowerCase().includes(searchText.toLowerCase()) ||
+        review.userName.toLowerCase().includes(searchText.toLowerCase())
+    );
+  }
+};
+
+const handleSort = (sortBy: string) => {
+  reviewsSortBy.value = sortBy;
+  if (sortBy === 'En Yeni') {
+    showedReviews.value = reviews.value.sort((a, b) => {
+      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+    });
+  } else if (sortBy === 'En Eski') {
+    showedReviews.value = reviews.value.sort((a, b) => {
+      return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+    });
+  }
+};
 </script>
 
 <template>
@@ -64,8 +152,11 @@ const score =
         :score="score"
       ></ReviewsSummary>
       <div class="reviews-outerSection">
-        <ReviewSearchFilter></ReviewSearchFilter>
-        <ReviewList></ReviewList>
+        <ReviewSearchFilter
+          @search="handleSearch"
+          @sort="handleSort"
+        ></ReviewSearchFilter>
+        <ReviewList :reviews="showedReviews"></ReviewList>
       </div>
     </div>
   </div>
