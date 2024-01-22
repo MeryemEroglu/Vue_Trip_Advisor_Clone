@@ -11,6 +11,9 @@
         <router-link to="/Review">
           <span>Review</span>
         </router-link>
+        <router-link to="/LastVisitedList">
+          <span>Last Visited List</span>
+        </router-link>
       </div>
     </div>
     <div class="router-view-wrapper">

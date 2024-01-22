@@ -17,6 +17,10 @@ const routes: RouteRecordRaw[] = [
         path: 'NavBar',
         component: () => import('pages/NavBarPage.vue'),
       },
+      {
+        path: 'LastVisitedList',
+        component: () => import('pages/LastVisitedListPage.vue'),
+      },
     ],
   },
 
