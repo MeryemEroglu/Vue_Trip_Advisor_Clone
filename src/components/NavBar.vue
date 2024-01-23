@@ -1,40 +1,53 @@
-<script setup>
+<script lang="ts" setup>
 import { ref } from 'vue';
+const isScrolled = ref<boolean>(false);
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 0) {
+    isScrolled.value = true;
+  } else {
+    isScrolled.value = false;
+  }
+});
 </script>
 
 <template>
-  <div class="container">
-    <nav class="inner-container">
-      <div class="logo-search-container">
-        <img src="../assets/logo.svg" alt="logo resmi" />
-      </div>
-      <div class="main-links-container">
-        <a href="#">Keşfedin</a>
-        <a href="#">Seyahetler</a>
-        <a href="#">Yorum Yazın</a>
-        <a href="#">Devamı</a>
-      </div>
-      <div class="language-login-btn-container">
-        <div
-          @click="$emit('openLocalizationModal')"
-          class="language-selector-button-container"
-        >
-          <i class="ri-global-line"></i>
-          <div>
-            <span>TRY</span>
-          </div>
+  <div class="wrapper" :class="{ scrolled: isScrolled }">
+    <div class="container">
+      <nav class="inner-container">
+        <div class="logo-search-container">
+          <img src="../assets/logo.svg" alt="logo resmi" />
         </div>
-        <button @click="$emit('openLoginModal')" class="login-btn">
-          giriş yap
-        </button>
-      </div>
-    </nav>
+        <div class="main-links-container">
+          <RouterLink to="/Articles">Keşfedin</RouterLink>
+          <a href="#">Seyahetler</a>
+          <a href="#">Yorum Yazın</a>
+          <a href="#">Devamı</a>
+        </div>
+        <div class="language-login-btn-container">
+          <div
+            @click="$emit('openLocalizationModal')"
+            class="language-selector-button-container"
+          >
+            <i class="ri-global-line"></i>
+            <div>
+              <span>TRY</span>
+            </div>
+          </div>
+          <button @click="$emit('openLoginModal')" class="login-btn">
+            giriş yap
+          </button>
+        </div>
+      </nav>
+    </div>
   </div>
 </template>
 
 <style scoped>
 .container {
-  margin-top: 8px;
+  background-color: #fff;
+}
+.wrapper.scrolled {
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 .inner-container {
   display: flex;
