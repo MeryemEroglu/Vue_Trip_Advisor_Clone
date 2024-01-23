@@ -3,7 +3,7 @@ import { RouteRecordRaw } from 'vue-router';
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    component: () => import('pages/IndexPage.vue'),
+    component: () => import('layouts/MainLayout.vue'),
     children: [
       {
         path: 'Review',
@@ -20,6 +20,14 @@ const routes: RouteRecordRaw[] = [
       {
         path: 'LastVisitedList',
         component: () => import('pages/LastVisitedListPage.vue'),
+      },
+      {
+        path: 'Articles',
+        component: () => import('pages/AllArticlesPage.vue'),
+      },
+      {
+        path: 'Article/:id',
+        component: () => import('pages/ArticlePage.vue'),
       },
     ],
   },
