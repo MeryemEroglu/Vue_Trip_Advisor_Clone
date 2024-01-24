@@ -17,10 +17,16 @@ onMounted(async () => {
 
 <template>
   <div class="pageContainer">
-    <div class="placeInfoContainer">
-      <h1>Place Info</h1>
+    <div class="titleInfoContainer container">
+      <p>Başlık</p>
+    </div>
+    <div class="placeInfoContainer container">
+      <p>Galeri</p>
     </div>
     <ReviewContainer></ReviewContainer>
+    <div class="FAQ-container container">
+      <FrequentlyAskedQuestions></FrequentlyAskedQuestions>
+    </div>
   </div>
 </template>
 
