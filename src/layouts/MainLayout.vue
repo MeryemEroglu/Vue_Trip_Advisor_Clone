@@ -27,7 +27,7 @@
   </div>
   <router-view />
   <div class="footer">
-    <h1>FOOTER</h1>
+    <p>FOOTER</p>
   </div>
 </template>
 
@@ -43,11 +43,15 @@ const isLoginModalActive = ref<boolean>(false);
 <style>
 .footer {
   height: 413px;
-  background-color: #faf1fd;
+  min-height: 413px;
+  background-color: #0efe66;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-top: auto;
+  font-size: 30px;
+  font-weight: 600;
+  margin-top: 20px;
 }
 .ml-nav {
   position: fixed;
