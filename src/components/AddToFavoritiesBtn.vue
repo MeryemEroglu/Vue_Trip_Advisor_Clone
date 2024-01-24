@@ -1,14 +1,26 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
-const isActive = ref<boolean>(false);
+import { usePlaceStore } from 'src/stores/place-store';
+
+const placeStore = usePlaceStore();
+const props = defineProps({
+  isFavorite: {
+    type: Boolean,
+    required: true,
+  },
+  id: {
+    type: String,
+    required: true,
+  },
+});
 const toggleActive = () => {
-  isActive.value = !isActive.value;
+  placeStore.togglePlaceFavorite(props.id);
 };
 </script>
 
 <template>
   <div @click="toggleActive" class="container">
-    <i v-if="!isActive" class="ri-heart-line"></i>
+    <i v-if="!props.isFavorite" class="ri-heart-line"></i>
     <i v-else style="color: red" class="ri-heart-fill"></i>
   </div>
 </template>

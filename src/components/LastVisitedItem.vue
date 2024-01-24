@@ -1,22 +1,45 @@
 <script lang="ts" setup>
 import ReviewScoreIndicator from 'src/components/Reviews/ReviewScoreIndicator.vue';
 import AddToFavoritiesBtn from './AddToFavoritiesBtn.vue';
-import { ref } from 'vue';
+import { ref, defineProps } from 'vue';
+const props = defineProps<{ placeData: Place }>();
+
+interface Place {
+  id: string;
+  Category: string;
+  Image: string;
+  Rate: number;
+  Rate1Count: number;
+  Rate2Count: number;
+  Rate3Count: number;
+  Rate4Count: number;
+  Rate5Count: number;
+  Title: string;
+  RateCount: number;
+  isFavorite: boolean;
+}
 </script>
 
 <template>
   <div class="lastVisited-elem">
     <div class="elem-imgWrapper">
-      <img class="elem-img" src="../assets/lastVisitedTemp.jpg" alt="" />
+      <img class="elem-img" :src="props.placeData?.Image" alt="" />
     </div>
-    <span><b>Palaco Postal</b></span>
+    <span
+      ><b>{{ props.placeData?.Title }}</b></span
+    >
     <div class="review-container">
-      <ReviewScoreIndicator :score="4"></ReviewScoreIndicator>
-      <span>2.230</span>
+      <ReviewScoreIndicator
+        :score="props.placeData.Rate"
+      ></ReviewScoreIndicator>
+      <span>{{ props.placeData.RateCount }}</span>
     </div>
-    <span>Mimari Yapılar</span>
+    <span>{{ props.placeData.Category }}</span>
     <div class="favoriteBtnContainer">
-      <AddToFavoritiesBtn></AddToFavoritiesBtn>
+      <AddToFavoritiesBtn
+        :id="props.placeData.id"
+        :isFavorite="props.placeData.isFavorite"
+      ></AddToFavoritiesBtn>
     </div>
   </div>
 </template>
@@ -40,6 +63,7 @@ import { ref } from 'vue';
   transition: 100ms;
   object-fit: fill;
   width: 100%;
+  height: 270px;
 }
 .elem-img:hover {
   opacity: 0.8;

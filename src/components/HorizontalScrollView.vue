@@ -2,6 +2,14 @@
 import ReviewScoreIndicator from 'src/components/Reviews/ReviewScoreIndicator.vue';
 import LastVisitedItem from './LastVisitedItem.vue';
 import { ref } from 'vue';
+import { defineProps } from 'vue';
+
+const props = defineProps({
+  title: {
+    type: String,
+    required: true,
+  },
+});
 
 const numberOfItemsOnScreen = ref<number>(4);
 
@@ -49,17 +57,10 @@ const scrollRightLocked = ref<boolean>(false);
 
 <template>
   <div class="list-mainContainer">
-    <h3>Son incelenenler</h3>
+    <h3>{{ props.title }}</h3>
     <div class="list-outerContainer" id="outerContainer">
       <div class="list-innerContainer" :class="'c-' + numberOfItemsOnScreen">
-        <LastVisitedItem></LastVisitedItem>
-        <LastVisitedItem></LastVisitedItem>
-        <LastVisitedItem></LastVisitedItem>
-        <LastVisitedItem></LastVisitedItem>
-        <LastVisitedItem></LastVisitedItem>
-        <LastVisitedItem></LastVisitedItem>
-        <LastVisitedItem></LastVisitedItem>
-        <LastVisitedItem></LastVisitedItem>
+        <slot> </slot>
       </div>
     </div>
     <button @click="scrollToLeft" v-if="!scrollLeftLocked" class="list-leftBtn">
@@ -75,7 +76,7 @@ const scrollRightLocked = ref<boolean>(false);
   </div>
 </template>
 
-<style scoped>
+<style>
 .list-innerContainer {
   display: flex;
   gap: 10px;
@@ -127,5 +128,11 @@ const scrollRightLocked = ref<boolean>(false);
   width: 100%;
   overflow-x: hidden;
   scroll-behavior: smooth;
+}
+.list-mainContainer > h3 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  line-height: 20px;
 }
 </style>
