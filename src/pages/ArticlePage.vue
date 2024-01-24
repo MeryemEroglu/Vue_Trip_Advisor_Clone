@@ -1,42 +1,73 @@
+<script setup lang="ts">
+import ArticleDetail from 'src/components/ArticleDetail.vue';
+import FrequentlyAskedQuestions from 'src/components/FrequentlyAskedQuestions.vue';
+import HorizontalScrollView from 'src/components/HorizontalScrollView.vue';
+import { useArticleStore } from 'src/stores/article-store';
+import { usePlaceStore } from 'src/stores/place-store';
+import { defineProps, onMounted, ref } from 'vue';
+import { useRoute } from 'vue-router';
+import { Timestamp } from 'firebase/firestore';
+import LastVisitedItem from 'src/components/LastVisitedItem.vue';
+
+const router = useRoute();
+const articleStore = useArticleStore();
+const placeStore = usePlaceStore();
+const article = ref<Article | null>(null);
+const props = defineProps({
+  $route: {
+    type: Object,
+    required: true,
+  },
+});
+
+onMounted(async () => {
+  const articleId = router.params.id;
+  const fetchedArticle = await articleStore.fetchArticleById(
+    articleId.toString()
+  );
+
+  if (fetchedArticle) {
+    article.value = fetchedArticle;
+  }
+
+  placeStore.fetchPlaces();
+});
+
+interface Article {
+  id: string;
+  Title: string;
+  ReadTime: number;
+  ArticleImage: string;
+  CreatedDate: Timestamp;
+  MainText: string;
+  AuthorName: string;
+  AuthorImage: string;
+}
+
+// fetch articles using article-store fetchArticleById action and store it in article variable useing pinia store
+</script>
 <template>
   <div class="container pageContainer" style="margin-top: 60px">
-    <div class="article-titleContainer">
-      <h1 class="article-title">Article Title</h1>
-      <div class="article-author">
-        <div class="article-authorImage">
-          <img src="../assets/profilePicture1.jpg" alt="" />
-        </div>
-        <span>Yazan: Ali Wunderman</span>
-        <div class="dot"></div>
-        <span>20 Haz 2023</span>
-        <div class="dot"></div>
-        <span>9 dakikalık okuma</span>
-      </div>
-    </div>
-
-    <div class="article-imageWrapper">
-      <img src="../assets/article.jpg" alt="" />
-    </div>
-    <div class="article-text">
-      İzlanda’da geçirilecek zaman konusunda verilecek hiçbir karar yanlış
-      olmaz, ancak üç günlük bir tatil ideal olacaktır. Reykjavik ve
-      çevresindeki bölgeyi, ancak tekrar ziyaret etmeye ilham verecek kadar
-      görebileceksiniz. İzlanda Havayolları’nın (Icelandair) transatlantik
-      yolcuların hiçbir ek uçuş ücreti ödemeden İzlanda’da 1 ila 7 gün
-      kalabilmesine olanak tanıyan Stopover programı sayesinde, Reykjavik
-      herhangi bir Avrupa seyahati için mükemmel bir ek olacaktır.
-    </div>
-    <HorizontalScrollView></HorizontalScrollView>
+    <ArticleDetail :articleData="article"></ArticleDetail>
+    <HorizontalScrollView
+      title="Mevcut seyahat programınızdan biraz sapmaya değecek yerler"
+    >
+      <LastVisitedItem
+        :placeData="place"
+        :key="place.id"
+        v-for="place in placeStore.places"
+      ></LastVisitedItem>
+      <LastVisitedItem
+        :placeData="place"
+        :key="place.id"
+        v-for="place in placeStore.places"
+      ></LastVisitedItem>
+    </HorizontalScrollView>
     <div class="faq-containerArticle">
       <FrequentlyAskedQuestions></FrequentlyAskedQuestions>
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import FrequentlyAskedQuestions from 'src/components/FrequentlyAskedQuestions.vue';
-import HorizontalScrollView from 'src/components/HorizontalScrollView.vue';
-</script>
 
 <style scoped>
 .faq-containerArticle {

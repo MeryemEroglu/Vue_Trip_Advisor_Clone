@@ -1,29 +1,49 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { RouterLink } from 'vue-router';
+import { defineProps } from 'vue';
+import { Timestamp } from 'firebase/firestore';
+
+const props = defineProps<{ articleData: Article | null }>();
+
+interface Article {
+  id: string;
+  Title: string;
+  ReadTime: number;
+  ArticleImage: string;
+  CreatedDate: Timestamp;
+  MainText: string;
+  AuthorName: string;
+  AuthorImage: string;
+}
+
+// MainText comes as rawHtml from firestore, so we need to parse it to innerText
+const miniMainText = props.articleData?.MainText.replace(
+  /<[^>]*>?/gm,
+  ''
+).substring(0, 200);
+</script>
 
 <template>
   <div class="articleContainer">
     <div class="article-leftContainer">
       <h2>
-        <RouterLink to="/Article/1"
-          >Tüm dünyadan kaçırılmaması gereken 14 destansı karnaval
-          kutlaması</RouterLink
-        >
+        <RouterLink :to="'/Article/' + props.articleData?.id">{{
+          props.articleData?.Title
+        }}</RouterLink>
       </h2>
-      <p>
-        Sizi günlerce eğlendirecek enerjik platform geçit törenleri, gösterişli
-        kostümler ve sokak partileri. Evet, dünyanın en iyi karnavalları geri
-        döndü ve uğruna seyahate çıkmaya değecek en büyük 14 kutla...
-      </p>
+      <p v-html="miniMainText"></p>
       <div class="article-infoContainer">
-        <span>Yazan: Michelle Neo</span>
+        <span>Yazan: {{ props.articleData?.AuthorName }}</span>
         <div class="dot"></div>
-        <span>9 Oca 2024</span>
+        <span>{{
+          props.articleData?.CreatedDate.toDate().toLocaleDateString()
+        }}</span>
         <div class="dot"></div>
-        <span>7 dakikalık okuma</span>
+        <span>{{ props.articleData?.ReadTime }} dakikalık okuma</span>
       </div>
     </div>
     <div class="article-rightContainer">
-      <img src="../assets/article.jpg" alt="" />
+      <img :src="props.articleData?.ArticleImage" alt="" />
     </div>
   </div>
 </template>
@@ -70,5 +90,16 @@
   min-width: 4px;
   border-radius: 50%;
   background-color: #333;
+}
+
+.article-rightContainer {
+  height: 100%;
+  min-width: 242px;
+  width: 242px;
+}
+.article-rightContainer img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 </style>

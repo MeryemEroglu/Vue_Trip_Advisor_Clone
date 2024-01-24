@@ -1,13 +1,32 @@
 <script lang="ts" setup>
 import ArticleElem from 'src/components/ArticleElem.vue';
+import { defineProps } from 'vue';
+import { Timestamp } from 'firebase/firestore';
+
+const props = defineProps<{ articleList: Article[] | null }>();
+
+console.log(props.articleList, 'aaaaaaaaaaaaa');
+
+interface Article {
+  id: string;
+  Title: string;
+  ReadTime: number;
+  ArticleImage: string;
+  CreatedDate: Timestamp;
+  MainText: string;
+  AuthorName: string;
+  AuthorImage: string;
+}
 </script>
 
 <template>
   <h1 class="articleListTitle">Tüm Seyahat Makaleleri</h1>
   <div class="listContainer">
-    <ArticleElem></ArticleElem>
-    <ArticleElem></ArticleElem>
-    <ArticleElem></ArticleElem>
+    <ArticleElem
+      :articleData="articleData"
+      :key="articleData.id"
+      v-for="articleData in articleList"
+    ></ArticleElem>
   </div>
 </template>
 
